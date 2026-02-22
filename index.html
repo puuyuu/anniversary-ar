@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>週年慶 AR 打卡</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+        .ui-buttons {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 1000; display: flex; gap: 10px;
+        }
+        button {
+            padding: 10px; background: gold; border: none; border-radius: 5px; font-weight: bold;
+        }
+    </style>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <div class="ui-buttons">
+        <button onclick="changeAR('gold')">金色</button>
+        <button onclick="changeAR('diamond')">鑽石</button>
+        <button onclick="changeAR('king')">王者</button>
+    </div>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+        <a-assets>
+            <img id="img-gold" src="你上傳的金色PNG網址.png">
+            <img id="img-diamond" src="你上傳的鑽石PNG網址.png">
+            <img id="img-king" src="你上傳的王者PNG網址.png">
+        </a-assets>
+
+        <a-camera gps-camera-rotation rotation-reader>
+            <a-image id="ar-overlay" src="#img-gold" 
+                     position="0 0 -1" scale="1.5 2.5 1"
+                     animation="property: scale; to: 1.6 2.6 1; dir: alternate; dur: 2000; loop: true">
+            </a-image>
+        </a-camera>
+    </a-scene>
+
+    <script>
+        function changeAR(type) {
+            const overlay = document.querySelector('#ar-overlay');
+            if(type === 'gold') overlay.setAttribute('src', '#img-gold');
+            if(type === 'diamond') overlay.setAttribute('src', '#img-diamond');
+            if(type === 'king') overlay.setAttribute('src', '#img-king');
+        }
+    </script>
+</body>
+</html>
